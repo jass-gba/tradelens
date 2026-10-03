@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="TradeLens — Smart Currency Market Signals. Market monitoring and technical signal analysis for selected currency pairs.">
+
+    <title>TradeLens — Smart Currency Market Signals</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: #080b10;
+            color: #edf2f7;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 6%;
+            background: rgba(8, 11, 16, 0.94);
+            border-bottom: 1px solid #202936;
+            backdrop-filter: blur(12px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #55e6b0, #2da6ff);
+            color: #071018;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            color: #aeb9c7;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 78vh;
+            max-width: 1100px;
+            margin: auto;
+            padding: 90px 6%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .badge {
+            color: #65e6b5;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .hero h1 {
+            margin: 18px 0;
+            font-size: clamp(44px, 8vw, 78px);
+            line-height: 1.02;
+        }
+
+        .hero h1 span {
+            color: #66d9ff;
+        }
+
+        .hero p {
+            max-width: 720px;
+            color: #aeb9c7;
+            font-size: 19px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 13px 21px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: #eafdf5;
+            color: #07120e;
+        }
+
+        .secondary {
+            border: 1px solid #303b49;
+            color: white;
+        }
+
+        .note {
+            margin-top: 20px;
+            color: #7f8b99;
+            font-size: 13px;
+        }
+
+        /* SECTIONS */
+        .section {
+            padding: 85px 6%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .dark-section {
+            max-width: none;
+            background: #0c1118;
+            border-top: 1px solid #171f29;
+            border-bottom: 1px solid #171f29;
+        }
+
+        .eyebrow {
+            color: #65e6b5;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 38px;
+            margin: 10px 0 30px;
+        }
+
+        .subtitle {
+            color: #8f9baa;
+        }
+
+        /* FEATURE CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .card {
+            background: #10161e;
+            border: 1px solid #202a36;
+            border-radius: 18px;
+            padding: 25px;
+        }
+
+        .card-icon {
+            color: #65e6b5;
+            font-size: 25px;
+        }
+
+        .card h3 {
+            margin: 10px 0 5px;
+        }
+
+        .card p {
+            color: #929eac;
+        }
+
+        /* HOW IT WORKS */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .step {
+            padding: 25px;
+            border-left: 2px solid #2da6ff;
+        }
+
+        .step-number {
+            color: #65e6b5;
+            font-weight: bold;
+        }
+
+        .step p {
+            color: #929eac;
+        }
+
+        /* PLANS */
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+        }
+
+        .plan {
+            position: relative;
+            background: #10161e;
+            border: 1px solid #202a36;
+            border-radius: 18px;
+            padding: 24px;
+        }
+
+        .plan.featured {
+            border-color: #3a8c78;
+        }
+
+        .plan h3 {
+            margin: 0;
+        }
+
+        .price {
+            display: block;
+            font-size: 27px;
+            font-weight: bold;
+            margin: 12px 0;
+        }
+
+        .plan p {
+            color: #929eac;
+        }
+
+        .plan-button {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            background: #eafdf5;
+            color: #07120e;
+            font-weight: bold;
+            margin-top: 18px;
+        }
+
+        .popular {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            color: #65e6b5;
+            font-size: 9px;
+            font-weight: bold;
+        }
+
+        /* LEGAL */
+        .legal {
+            max-width: 850px;
+        }
+
+        .legal p {
+            color: #929eac;
+            margin-bottom: 18px;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 30px 6%;
+            border-top: 1px solid #202936;
+            color: #778392;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 18px;
+        }
+
+        .footer-links a {
+            color: #8f9baa;
+            font-size: 13px;
+        }
+
+        /* MOBILE */
+        @media (max-width: 900px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .plans {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .hero {
+                padding-top: 65px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .cards,
+            .steps,
+            .plans {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 65px 5%;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<header class="navbar">
+
+    <a href="#home" class="brand">
+        <span class="logo">TL</span>
+        TradeLens
+    </a>
+
+    <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#plans">Plans</a>
+        <a href="#how">How It Works</a>
+        <a href="#risk">Risk</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+</header>
+
+
+<!-- HERO -->
+<section id="home" class="hero">
+
+    <div class="badge">
+        SMART CURRENCY MARKET MONITORING
+    </div>
+
+    <h1>
+        See the market.<br>
+        <span>Understand the signal.</span>
+    </h1>
+
+    <p>
+        TradeLens monitors selected currency pairs and combines
+        market indicators into clear signal analysis, helping users
+        review market conditions from one focused dashboard.
+    </p>
+
+    <div class="buttons">
+
+        <a href="#plans" class="btn primary">
+            View Plans
+        </a>
+
+        <a href="#how" class="btn secondary">
+            How It Works
+        </a>
+
+    </div>
+
+    <div class="note">
+        For informational and analytical use only.
+        TradeLens does not guarantee profits.
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+<section id="features" class="section">
+
+    <div class="eyebrow">
+        FEATURES
+    </div>
+
+    <h2>
+        Focused market analysis
+    </h2>
+
+    <div class="cards">
+
+        <article class="card">
+            <div class="card-icon">◈</div>
+            <h3>Currency Pairs</h3>
+            <p>
+                Monitor selected major and cross currency pairs
+                from a single interface.
+            </p>
+        </article>
+
+        <article class="card">
+            <div class="card-icon">⌁</div>
+            <h3>Multi-Timeframe</h3>
+            <p>
+                Review market conditions across short and
+                longer timeframes.
+            </p>
+        </article>
+
+        <article class="card">
+            <div class="card-icon">◉</div>
+            <h3>Signal Analysis</h3>
+            <p>
+                Technical conditions are evaluated to identify
+                stronger or weaker market setups.
+            </p>
+        </article>
+
+        <article class="card">
+            <div class="card-icon">↗</div>
+            <h3>Live Monitoring</h3>
+            <p>
+                Online market data allows the application to
+                reflect changing conditions.
+            </p>
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section id="how" class="section dark-section">
+
+    <div style="max-width:1100px;margin:auto;">
+
+        <div class="eyebrow">
+            HOW IT WORKS
+        </div>
+
+        <h2>
+            Simple, focused workflow
+        </h2>
+
+        <div class="steps">
+
+            <div class="step">
+                <div class="step-number">01</div>
+                <h3>Select</h3>
+                <p>
+                    Choose a supported currency pair and timeframe.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">02</div>
+                <h3>Monitor</h3>
+                <p>
+                    TradeLens receives online market data and
+                    evaluates technical conditions.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">03</div>
+                <h3>Review</h3>
+                <p>
+                    Review the resulting market signal and
+                    supporting information before making any decision.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PLANS -->
+<section id="plans" class="section">
+
+    <div class="eyebrow">
+        PLANS & PRICING
+    </div>
+
+    <h2>
+        Choose your access period
+    </h2>
+
+    <p class="subtitle">
+        Access plans for the TradeLens application.
+    </p>
+
+    <div class="plans">
+
+        <article class="plan">
+            <h3>7 DAY</h3>
+            <span class="price">₹1,999</span>
+            <p>7 days of access</p>
+
+            <!-- Razorpay link will be added later -->
+            <a href="#" class="plan-button">
+                Get Access
+            </a>
+        </article>
+
+
+        <article class="plan featured">
+
+            <span class="popular">
+                POPULAR
+            </span>
+
+            <h3>30 DAY</h3>
+            <span class="price">₹5,999</span>
+            <p>30 days of access</p>
+
+            <!-- Razorpay link will be added later -->
+            <a href="#" class="plan-button">
+                Get Access
+            </a>
+
+        </article>
+
+
+        <article class="plan">
+            <h3>90 DAY</h3>
+            <span class="price">₹14,999</span>
+            <p>90 days of access</p>
+
+            <!-- Razorpay link will be added later -->
+            <a href="#" class="plan-button">
+                Get Access
+            </a>
+        </article>
+
+
+        <article class="plan">
+            <h3>1 YEAR</h3>
+            <span class="price">₹39,999</span>
+            <p>1 year of access</p>
+
+            <!-- Razorpay link will be added later -->
+            <a href="#" class="plan-button">
+                Get Access
+            </a>
+        </article>
+
+
+        <article class="plan">
+            <h3>LIFETIME</h3>
+            <span class="price">₹99,999</span>
+            <p>Lifetime access</p>
+
+            <!-- Razorpay link will be added later -->
+            <a href="#" class="plan-button">
+                Get Access
+            </a>
+        </article>
+
+    </div>
+
+    <p class="note">
+        Payment links will be connected to the official
+        Razorpay Payment Pages before publication.
+    </p>
+
+</section>
+
+
+<!-- RISK DISCLOSURE -->
+<section id="risk" class="section dark-section">
+
+    <div style="max-width:1100px;margin:auto;">
+
+        <div class="eyebrow">
+            RISK DISCLOSURE
+        </div>
+
+        <h2>
+            Important information
+        </h2>
+
+        <div class="legal">
+
+            <p>
+                TradeLens provides market monitoring and technical
+                signal analysis for informational purposes. It is not
+                investment, financial, trading, or tax advice.
+            </p>
+
+            <p>
+                Currency and leveraged trading can involve substantial
+                risk, including loss of capital. Past performance or
+                historical signals do not guarantee future results.
+            </p>
+
+            <p>
+                No signal, alert, analysis, or feature provided by
+                TradeLens is a guarantee of profit or a recommendation
+                to enter or exit a trade.
+            </p>
+
+            <p>
+                Users are responsible for their own decisions and
+                risk management.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TERMS -->
+<section id="terms" class="section">
+
+    <div class="eyebrow">
+        TERMS
+    </div>
+
+    <h2>
+        Terms & Conditions
+    </h2>
+
+    <div class="legal">
+
+        <p>
+            By purchasing or using TradeLens, you agree to use
+            the service lawfully and for your own informational
+            and analytical purposes.
+        </p>
+
+        <p>
+            Access is provided according to the selected plan
+            and activation status. Accounts, activation codes,
+            and access credentials must not be shared, resold,
+            or misused.
+        </p>
+
+        <p>
+            Service availability can depend on internet connectivity,
+            third-party market-data providers, maintenance, and
+            other technical factors.
+        </p>
+
+        <p>
+            Pricing, plan availability, features, and these terms
+            may be updated when necessary.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- PRIVACY -->
+<section id="privacy" class="section dark-section">
+
+    <div style="max-width:1100px;margin:auto;">
+
+        <div class="eyebrow">
+            PRIVACY
+        </div>
+
+        <h2>
+            Privacy Policy
+        </h2>
+
+        <div class="legal">
+
+            <p>
+                TradeLens may process information needed for account
+                access, activation, support, payment verification,
+                security, and service operation.
+            </p>
+
+            <p>
+                Payment information is processed by the selected
+                payment provider. TradeLens does not require users
+                to provide payment card credentials directly to
+                the application.
+            </p>
+
+            <p>
+                Information may be retained as reasonably necessary
+                for security, legal, accounting, dispute-resolution,
+                and service-support purposes.
+            </p>
+
+            <p>
+                For privacy questions or requests, contact TradeLens
+                support.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- REFUND -->
+<section id="refund" class="section">
+
+    <div class="eyebrow">
+        REFUNDS
+    </div>
+
+    <h2>
+        Refund & Cancellation Policy
+    </h2>
+
+    <div class="legal">
+
+        <p>
+            Please review the selected plan and purchase details
+            before completing payment.
+        </p>
+
+        <p>
+            Because access may be activated after payment verification,
+            completed purchases may be non-refundable once access has
+            been issued, except where required by applicable law or
+            where a payment provider reverses or disputes a transaction.
+        </p>
+
+        <p>
+            If you experience a payment or activation problem,
+            contact support with your transaction reference and
+            registered email so the issue can be reviewed.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACT -->
+<section id="contact" class="section dark-section">
+
+    <div style="max-width:1100px;margin:auto;">
+
+        <div class="eyebrow">
+            CONTACT
+        </div>
+
+        <h2>
+            TradeLens Support
+        </h2>
+
+        <div class="legal">
+
+            <p>
+                For activation, payment, account, or technical
+                support, contact TradeLens using the support details
+                provided on the official payment page or purchase
+                confirmation.
+            </p>
+
+            <p>
+             Email-id - jasdev.arya@gmail.com
+             
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="footer-inner">
+
+        <div class="brand">
+            <span class="logo">TL</span>
+            TradeLens
+        </div>
+
+        <div>
+            © 2026 TradeLens. All rights reserved.
+        </div>
+
+        <div class="footer-links">
+            <a href="#terms">Terms</a>
+            <a href="#privacy">Privacy</a>
+            <a href="#refund">Refunds</a>
+            <a href="#risk">Risk</a>
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+</html>
